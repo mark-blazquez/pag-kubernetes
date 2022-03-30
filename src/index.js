@@ -5,7 +5,8 @@ app.set('port',8080);
 
 //routes
 //las lee desde el fichero routes 
-app.use(require('./routes/routes.js'));
+app.use('/api/',require('./routes/routes.js'));
+
 
 //middleware
 //entender formularios 
