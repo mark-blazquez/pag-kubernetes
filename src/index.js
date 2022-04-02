@@ -4,7 +4,7 @@ const bodyParser = require ('body-parser');
 const morgan = require('morgan');
 
 //numero  de puerto
-app.set('port',8080);
+app.set('port',3000);
 
 //middleware
 //entender formularios 
@@ -17,9 +17,11 @@ app.use(morgan('dev'))
 //routes
 //las lee desde el fichero routes declaramos que la ruta tenga antes /api
 app.use(require('./routes/routes.js'));
+//con dominio /api
 //app.use('/api',require('./routes/routes.js'));
+
 
 //creacion del servidor
 app.listen(app.get('port'),()=>{
-    console.log ("servidor corriendo en el puerto 8080")
+    console.log ("servidor corriendo en el puerto 3000")
 })

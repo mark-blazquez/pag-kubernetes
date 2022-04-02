@@ -1,11 +1,17 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { Component } from "react";
 import Cabecera from './componentes/cabecera';
+import Formulario from './componentes/formulario';
+import Pie from './componentes/pie';
 
 
 function App() {
 	return (
-		<Cabecera/>
+	<div>
+      <Cabecera />
+      <Formulario />
+	  <Pie />
+    </div>
 	);
 
 }
