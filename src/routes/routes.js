@@ -29,7 +29,7 @@ router.get('/',(req,res) => {
 //metodo post pasando un json 
 router.post('/',(req,res) => {
     res.send('index de la pagina')
-    request(url, options, (error, res, body) => {
+    /*request(url, options, (error, res, body) => {
     //obtengo los pedidos de el json y se guardan en la varible pedidos
         const pedidos = body
         //console.log(pedidos)
@@ -42,12 +42,29 @@ router.post('/',(req,res) => {
         //ver el nuevo pedido  
         console.log(newpedido)
         //añadir el nuevo pedido al json obtenido del servidor 
-        pedidos.push(newpedido)
+        //pedidos.push(newpedido)
         //ver el nuevo json con todos los pedidos
-        console.log(pedidos);
+        //console.log(pedidos);
         //habria que enviar pedidos de vuelta a el json y que sobrescriba todo lo que hay o solo añadir lo ultimo que se guarda en newpedido hay que investigar
+        /*fs = require('fs');
+        fs.writeFile(url, JSON.stringify(newpedido, null, 2), function (err) {
+            if (err) return console.log(err);
+            console.log('pedido añadido');
+        });
+
+    });*/
+    const newpedido = {...req.body}
+    console.log(newpedido)
+    request.post({
+        url: url,
+        json: newpedido
+      }, function(error, response, body){
+      console.log("funcionando");
     });
+
+
 })
+
 //---------------------------------------------------------------------------------------------------
 //metodo delete pasando un id
 router.delete('/:id',(req,res) => {
@@ -65,6 +82,57 @@ router.delete('/:id',(req,res) => {
     });
 })
 
+//---------------------------------------------------------------------------------------------------
+//inicio de sesion con google
+var passport = require('passport');
+var GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
+const {Claves} = require('../claves/claves');
+
+passport.serializeUser(function(user, done) {
+    done(null, user);
+});
+passport.deserializeUser(function(user , done) {
+    done(null, user);
+});
+
+passport.use(
+    new GoogleStrategy(
+        {
+            callbackURL: '/auth/google/callback',
+            clientID: Claves.client_id,
+            clientSecret: Claves.client_secret,
+        },
+        (accessToken, refreshToken, profile, cb) => {
+            //console.log(accessToken)
+            console.log(profile)
+            if(profile._json.email === "blazquezmark97@gmail.com"){
+                console.log("correct user")
+            }else{
+                // fail        
+                console.log("bad user")
+            }
+            return cb (null, profile);
+        }
+    )
+)
+//google passport routes
+router.get('/auth/google',
+  passport.authenticate('google', { scope:
+      [ 'email', 'profile' ] }
+));
+router.get( '/auth/google/callback',
+    passport.authenticate( 'google', {
+        successRedirect: '/succes',
+        failureRedirect: '/error'
+} )
+);
+
+router.get('/error', (req, res) => {
+    res.send('error')
+  });
+router.get('/succes', (req, res) => {
+    res.send('succes')
+});
 //---------------------------------------------------------------------------------------------------
 
 //conectar express con react ruta fallan 
