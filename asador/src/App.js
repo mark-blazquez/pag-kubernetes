@@ -6,10 +6,13 @@ import Pie from './componentes/pie';
 
 
 function App() {
+	const [data, setData] = React.useState(null);
+
 	return (
 	<div>
       <Cabecera />
       <Formulario />
+
 	  <Pie />
     </div>
 	);
