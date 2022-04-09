@@ -104,7 +104,7 @@ passport.use(
         },
         (accessToken, refreshToken, profile, cb) => {
             //console.log(accessToken)
-            console.log(profile)
+            //console.log(profile)
             if(profile._json.email === "blazquezmark97@gmail.com"){
                 console.log("correct user")
             }else{
