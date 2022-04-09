@@ -53,6 +53,7 @@ router.post('/',(req,res) => {
         });
 
     });*/
+    ///metodo que recupera el json del formulario guarda en variable y envia el objeto a la url ---no funciona
     const newpedido = {...req.body}
     console.log(newpedido)
     request.post({
