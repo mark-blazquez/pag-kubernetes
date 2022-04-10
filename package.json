@@ -5,12 +5,13 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/index.js morgan",
-    "client": "cd asador && npm start"
+    "client": "cd asador && npm install && npm run build"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.2",
+    "cors": "^2.8.5",
     "express": "^4.17.3",
     "fs": "^0.0.1-security",
     "morgan": "^1.10.0",

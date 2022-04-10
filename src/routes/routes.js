@@ -8,9 +8,16 @@ const request = require('request');
 
 //rutas
 //---------------------------------------------------------------------------------------------------
+// metodo get - examina los elementos del json local 
+const pedidos = require("../pedidos.json")
+router.get('/',(req,res) => {
+    res.send('index encargos')
+    console.log(pedidos)
+})
+
 
 // metodo get - examina los elementos del json en la url especificada y la muestra por pantalla 
-router.get('/',(req,res) => {
+/*router.get('/',(req,res) => {
     res.send('index encargos')
     request(url, options, (error, res, body) => {
         if (error) {
@@ -23,28 +30,42 @@ router.get('/',(req,res) => {
     });
     //res.sendFile(path.join(__dirname+'../../asador/build/index.html'));
 
-})
+})*/
 
 //---------------------------------------------------------------------------------------------------
+//metodo post pasando un json local 
+router.post('/',(req,res) => {
+    res.send('index de la pagina')
+
+    //añadir id al pedido
+    var id = Object.keys(pedidos).length + 1;
+    //console.log(id)
+    const newpedido = {id, ...req.body}
+    //ver el nuevo pedido  
+    //console.log(newpedido)
+    //añadir el nuevo pedido al json obtenido del servidor 
+    pedidos.push(newpedido)
+
+    //ver el nuevo json con todos los pedidos
+    console.log(pedidos);
+});
+/*
 //metodo post pasando un json 
 router.post('/',(req,res) => {
     res.send('index de la pagina')
-    /*request(url, options, (error, res, body) => {
+    request(url, options, (error, res, body) => {
     //obtengo los pedidos de el json y se guardan en la varible pedidos
         const pedidos = body
-        //console.log(pedidos)
-        //recupero lo que pasa post y lo guardo en variables con nombre sirve x si quiero validar k no va a ser el caso porque puede tener campos vacios
-        //const {pollo, patatas, nombre}= req.body
         //añadir id al pedido
-        const id = pedidos.leght + 1;
+        var id = Object.keys(pedidos).length +1;
         //console.log(id)
         const newpedido = {id, ...req.body}
         //ver el nuevo pedido  
         console.log(newpedido)
         //añadir el nuevo pedido al json obtenido del servidor 
-        //pedidos.push(newpedido)
+        pedidos.push(newpedido)
         //ver el nuevo json con todos los pedidos
-        //console.log(pedidos);
+        console.log(pedidos);
         //habria que enviar pedidos de vuelta a el json y que sobrescriba todo lo que hay o solo añadir lo ultimo que se guarda en newpedido hay que investigar
         /*fs = require('fs');
         fs.writeFile(url, JSON.stringify(newpedido, null, 2), function (err) {
@@ -52,9 +73,10 @@ router.post('/',(req,res) => {
             console.log('pedido añadido');
         });
 
-    });*/
+    *///});
+
     ///metodo que recupera el json del formulario guarda en variable y envia el objeto a la url ---no funciona
-    const newpedido = {...req.body}
+    /*const newpedido = {...req.body}
     console.log(newpedido)
     request.post({
         url: url,
@@ -62,9 +84,9 @@ router.post('/',(req,res) => {
       }, function(error, response, body){
       console.log("funcionando");
     });
+    */
 
-
-})
+//})
 
 //---------------------------------------------------------------------------------------------------
 //metodo delete pasando un id
@@ -104,7 +126,7 @@ passport.use(
             clientSecret: Claves.client_secret,
         },
         (accessToken, refreshToken, profile, cb) => {
-            //console.log(accessToken)
+            console.log(accessToken)
             //console.log(profile)
             if(profile._json.email === "blazquezmark97@gmail.com"){
                 console.log("correct user")
@@ -118,14 +140,16 @@ passport.use(
 )
 //google passport routes
 router.get('/auth/google',
-  passport.authenticate('google', { scope:
-      [ 'email', 'profile' ] }
+    passport.authenticate('google', {
+        scope:
+            ['email', 'profile']
+    }
 ));
-router.get( '/auth/google/callback',
-    passport.authenticate( 'google', {
+router.get('/auth/google/callback',
+    passport.authenticate('google', {
         successRedirect: '/succes',
         failureRedirect: '/error'
-} )
+    })
 );
 
 router.get('/error', (req, res) => {
@@ -141,6 +165,8 @@ router.get('/succes', (req, res) => {
 //router.use(express.static("/asador"));
 //router.use( '/' ,express.static('../../asador/public'));
 //router.use( '/' , express.static( path.join(__dirname, '/asador/build')));
-
+router.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../asador/build', 'index.html'));
+});
 
 module.exports = router
