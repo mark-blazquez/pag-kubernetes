@@ -18,9 +18,13 @@ app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 //morgan
 app.use(morgan('dev'))
+const cors = require('cors');
+app.use(cors());
+
+
 
 //routes
-//conectando express con node
+//conectando react con node -- para que cualquier get muestre index
 /*app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, '../asador/build', 'index.html'));
 });*/
@@ -29,18 +33,18 @@ app.use(morgan('dev'))
 //---------------------------------------------------------------------------------------------------
 // metodo get - examina los elementos del json local 
 const pedidos = require("./pedidos.json")
-app.use( '/' , express.static( path.join(__dirname, '/asador/build')));
+//app.use(express.static( path.join(__dirname ,'/../asador/build')));
 
-app.get('/',(req,res) => {
-    console.log(pedidos)
-})
+app.get("/api", (req, res) => {
+    console.log(pedidos);
+    res.send({pedidos: pedidos})
+});
+
 
 
 //---------------------------------------------------------------------------------------------------
 //metodo post pasando un json local 
-app.post('/',(req,res) => {
-    res.send('index de la pagina')
-
+app.post('/api',(req,res) => {
     //añadir id al pedido
     var id = Object.keys(pedidos).length + 1;
     //console.log(id)
@@ -52,25 +56,13 @@ app.post('/',(req,res) => {
 
     //ver el nuevo json con todos los pedidos
     console.log(pedidos);
+    res.sendFile(path.resolve(__dirname, '../asador/build', 'index.html'));
 });
 
 
 //---------------------------------------------------------------------------------------------------
-//metodo delete pasando un id
-app.delete('/:id',(req,res) => {
-    res.send('index de la pagina')
-    request(url, options, (error, res, body) => {
-        //obtengo los pedidos de el json y se guardan en la varible pedidos
-        const pedidos = body
-        //recupero el id pasado por parametro
-        const {id} = req.params
-        _.each(pedidos,(pedidos,i)=>{
-            if (pedidos.id == id){
-                pedidos.splice(i, 1)
-            }
-        })
-    });
-})
+//metodo delete pasando un id a otro json 
+
 
 //---------------------------------------------------------------------------------------------------
 //inicio de sesion con google
@@ -93,7 +85,7 @@ passport.use(
             clientSecret: Claves.client_secret,
         },
         (accessToken, refreshToken, profile, cb) => {
-            console.log(accessToken)
+            //console.log(accessToken)
             //console.log(profile)
             if(profile._json.email === "blazquezmark97@gmail.com"){
                 console.log("correct user")
@@ -106,7 +98,7 @@ passport.use(
     )
 )
 //google passport routes
-app.get('/auth/google',
+app.get('/api/auth/google',
     passport.authenticate('google', {
         scope:
             ['email', 'profile']
