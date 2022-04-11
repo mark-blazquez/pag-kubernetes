@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import Cabecera from './componentes/cabecera';
 import Formulario from './componentes/formulario';
 import Pedidos from './componentes/pedidos';
-
 import Pie from './componentes/pie';
 
 
