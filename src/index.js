@@ -14,7 +14,7 @@ const json_pedidos = fs.readFileSync(path.join(__dirname ,'pedidos.json'),'utf-8
 const pedidos = JSON.parse(json_pedidos)
 var cors = require('cors')
 //numero  de puerto
-app.set('port',3000);
+app.set('port',8080);
 
 //middleware
 //formulario
@@ -139,5 +139,5 @@ app.get('/succes', (req, res) => {
 
 //creacion del servidor
 app.listen(app.get('port'),()=>{
-    console.log ("servidor corriendo en el puerto 3000")
+    console.log ("servidor corriendo en el puerto 8080")
 })
