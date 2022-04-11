@@ -7,6 +7,10 @@ const req = require("express/lib/request");
 const url = 'http://localhost:80/pedidos.json';
 let options = { json: true };
 const request = require('request');
+var cors = require('cors')
+app.use(cors())
+
+
 
 //numero  de puerto
 app.set('port',3000);
@@ -18,8 +22,8 @@ app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 //morgan
 app.use(morgan('dev'))
-const cors = require('cors');
-app.use(cors());
+const fs = require('fs');
+
 
 
 
@@ -32,31 +36,36 @@ app.use(cors());
 //rutas
 //---------------------------------------------------------------------------------------------------
 // metodo get - examina los elementos del json local 
-const pedidos = require("./pedidos.json")
-//app.use(express.static( path.join(__dirname ,'/../asador/build')));
 
+/*const json_pedidos = fs.readFileSync('/src/pedidos.son','utf-8')
+const pedidos = JSON.parse(json_pedidos)*/
+//app.use(express.static( path.join(__dirname ,'/../asador/build')));
+const pedidos = require("../pedidos.json")
+
+//ruta base devuelve el objeto pedidos a front end para que los muestre
 app.get("/api", (req, res) => {
-    console.log(pedidos);
+    //console.log(pedidos);
     res.send({pedidos: pedidos})
 });
 
-
-
 //---------------------------------------------------------------------------------------------------
 //metodo post pasando un json local 
-app.post('/api',(req,res) => {
+app.post('/api/nuevo',(req,res) => {
     //añadir id al pedido
-    var id = Object.keys(pedidos).length + 1;
+    //var id = Object.keys(pedidos).length + 1;
     //console.log(id)
-    const newpedido = {id, ...req.body}
+    const newpedido = req.body
     //ver el nuevo pedido  
     //console.log(newpedido)
     //añadir el nuevo pedido al json obtenido del servidor 
     pedidos.push(newpedido)
-
+    //cojemos el json de epdidos y lo guaradmos como texto
+    const json_pedidos = JSON.stringify(pedidos)
+    fs.writeFileSync('../pedidos.json', json_pedidos,'utf-8')
     //ver el nuevo json con todos los pedidos
-    console.log(pedidos);
-    res.sendFile(path.resolve(__dirname, '../asador/build', 'index.html'));
+    //console.log(pedidos);
+    res.send("añadido")
+
 });
 
 
