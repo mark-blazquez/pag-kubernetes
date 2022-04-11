@@ -29,17 +29,13 @@ app.use(morgan('dev'))
 
 //rutas 
 //conectando react con node -- para que cualquier get muestre index
-/*app.get('*', (req, res) => {
+/*/app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, '../asador/build', 'index.html'));
 });*/
+//app.use(express.static( path.join(__dirname ,'/../asador/build')));
 
 //---------------------------------------------------------------------------------------------------
 // metodo get - examina los elementos del json local 
-//esto se hace para poder escribir sobre este fichero
-
-//app.use(express.static( path.join(__dirname ,'/../asador/build')));
-
-//const pedidos = require("../pedidos.json")
 
 //ruta base devuelve el objeto pedidos a front end para que los muestre
 app.get("/api", (req, res) => {
@@ -54,16 +50,6 @@ app.post('/api/nuevo',(req,res) => {
     console.log(req.body)
     const newpedido = req.body
     console.log(newpedido)
-
-    
-    //añadir id al pedido
-    //var id = Object.keys(pedidos).length + 1;
-    //var id = (pedidos).length + 1;  
-    //bject.keys(newpedido).add(id)
-    //console.log(newpedido)
-
-    //console.log(id)
-    //ver el nuevo pedido  
     //console.log(newpedido)
     //añadir el nuevo pedido al json obtenido del servidor 
     pedidos.push(newpedido)
