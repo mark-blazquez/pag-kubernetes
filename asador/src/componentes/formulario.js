@@ -6,7 +6,8 @@ class Formulario extends React.Component {
 		this.state = {
 			pollo:"",
 			patatas:"",
-			nombre:""
+			nombre:"",
+			id: Math.random()//esto hace un id aleatorio
 		}
 		this.handleInputChange = this.handleInputChange.bind(this);
 	}
@@ -16,12 +17,16 @@ class Formulario extends React.Component {
 		const pollo = target.pollo;
 		const patatas = target.patatas;
 		const nombre = target.nombre;
-		//creamos el objetol que vamos a pasar a la api pero esta vez con sus valores 
+		const id = target.id;
+
+		//creamos el objetol que vamos a pasar a la api pero esta vez con sus valores recuperados del form 
 
 		this.setState({
 			pollo: pollo,
 			patatas: patatas,
-			nombre: nombre
+			nombre: nombre,
+			id: id
+
 		}
 	);
 }
@@ -31,16 +36,20 @@ class Formulario extends React.Component {
 		return (
 			<form className="container" method="POST" action="/nuevo" name="formulario">
 				<div className="form-group">
-					<label htmlFor="exampleInputEmail1">pollo</label>
+					<label >pollo</label>
 					<input type="number" className="form-control" name ="pollo"   placeholder="....." />
 				</div>
 				<div className="form-group">
-					<label htmlFor="exampleInputPassword1">patatas</label>
+					<label >patatas</label>
 					<input type="number" className="form-control" name ="patatas" placeholder="......" />
 				</div>
 				<div className="form-group">
-					<label htmlFor="exampleInputPassword1">nombre</label>
+					<label >nombre</label>
 					<input type="text" className="form-control" name ="nombre" placeholder="....." />
+				</div>
+				<div className="form-group  d-none"> {/*lo que hace es crear un campo oculto con el valor aleatorio definido arriba y pasarlo por formulario para luego declarar el objeto con ese valor  */}
+					<label >id</label>
+					<input type="number" className="form-control" name ="id" value={this.state.id}  />
 				</div>
 				<button type="submit" className="btn btn-primary" >registrar</button>
 			</form>

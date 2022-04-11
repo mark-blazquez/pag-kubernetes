@@ -1,1 +1,1 @@
-[{"id":1,"pollo":1,"patatas":1,"nombre":"pepe"},{"pollo":"1","patatas":"2","nombre":"ola"},{"pollo":"1","patatas":"2","nombre":"oldea"}]
+[{"id":1,"newpedido":{"pollo":"1","patatas":"2","nombre":"movil"}}]

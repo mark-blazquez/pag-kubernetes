@@ -1,3 +1,4 @@
+//varibales 
 const express = require ('express');
 const app = express();
 const bodyParser = require ('body-parser');
@@ -7,40 +8,38 @@ const req = require("express/lib/request");
 const url = 'http://localhost:80/pedidos.json';
 let options = { json: true };
 const request = require('request');
+//para escribir en un archivo
+const fs = require('fs');
+const json_pedidos = fs.readFileSync(path.join(__dirname ,'pedidos.json'),'utf-8')
+const pedidos = JSON.parse(json_pedidos)
 var cors = require('cors')
-app.use(cors())
-
-
-
 //numero  de puerto
 app.set('port',3000);
 
 //middleware
+//formulario
+app.use(cors())
+
 //entender formularios 
 app.use(express.urlencoded({extended: false}));
 //procesar datos json
 app.use(express.json());
-//morgan
+//morgan-para ver la respuestas desde consola
 app.use(morgan('dev'))
-const fs = require('fs');
 
-
-
-
-//routes
+//rutas 
 //conectando react con node -- para que cualquier get muestre index
 /*app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, '../asador/build', 'index.html'));
 });*/
 
-//rutas
 //---------------------------------------------------------------------------------------------------
 // metodo get - examina los elementos del json local 
+//esto se hace para poder escribir sobre este fichero
 
-/*const json_pedidos = fs.readFileSync('/src/pedidos.son','utf-8')
-const pedidos = JSON.parse(json_pedidos)*/
 //app.use(express.static( path.join(__dirname ,'/../asador/build')));
-const pedidos = require("../pedidos.json")
+
+//const pedidos = require("../pedidos.json")
 
 //ruta base devuelve el objeto pedidos a front end para que los muestre
 app.get("/api", (req, res) => {
@@ -51,17 +50,26 @@ app.get("/api", (req, res) => {
 //---------------------------------------------------------------------------------------------------
 //metodo post pasando un json local 
 app.post('/api/nuevo',(req,res) => {
+    //obtenemos el pedido del form 
+    console.log(req.body)
+    const newpedido = req.body
+    console.log(newpedido)
+
+    
     //añadir id al pedido
     //var id = Object.keys(pedidos).length + 1;
+    //var id = (pedidos).length + 1;  
+    //bject.keys(newpedido).add(id)
+    //console.log(newpedido)
+
     //console.log(id)
-    const newpedido = req.body
     //ver el nuevo pedido  
     //console.log(newpedido)
     //añadir el nuevo pedido al json obtenido del servidor 
     pedidos.push(newpedido)
     //cojemos el json de epdidos y lo guaradmos como texto
     const json_pedidos = JSON.stringify(pedidos)
-    fs.writeFileSync('../pedidos.json', json_pedidos,'utf-8')
+    fs.writeFileSync(path.join(__dirname ,'pedidos.json'), json_pedidos,'utf-8')
     //ver el nuevo json con todos los pedidos
     //console.log(pedidos);
     res.send("añadido")
