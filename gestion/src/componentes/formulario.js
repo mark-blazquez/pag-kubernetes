@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 class Formulario extends React.Component { 
-	//creamos el onjeto que vamos a pasar a la api vacio 
+	//creamos el objeto que vamos a pasar a la api, aqui vacio 
 	constructor(props) {
 		super(props);
 		this.state = {

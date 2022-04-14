@@ -11,7 +11,7 @@ const request = require('request');
 //para escribir en un archivo
 const fs = require('fs');
 const json_pedidos = fs.readFileSync(path.join(__dirname ,'pedidos.json'),'utf-8')
-const pedidos = JSON.parse(json_pedidos)
+let pedidos = JSON.parse(json_pedidos)
 var cors = require('cors')
 //numero  de puerto
 app.set('port',8080);
@@ -26,30 +26,30 @@ app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 //morgan-para ver la respuestas desde consola
 app.use(morgan('dev'))
+app.set('view engine','ejs')
 
-//rutas 
-//conectando react con node -- para que cualquier get muestre index
-/*/app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../asador/build', 'index.html'));
-});*/
-//app.use(express.static( path.join(__dirname ,'/../asador/build')));
-
+//rutas pag gestion
 //---------------------------------------------------------------------------------------------------
-// metodo get - examina los elementos del json local 
+//conectando react con node -- para que cualquier get muestre index
+/*app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../gestion/build', 'index.html'));
+});*/
+//app.use(express.static( path.join(__dirname ,'/../gestion/build')));
 
-//ruta base devuelve el objeto pedidos a front end para que los muestre
+// metodo get -devuelve el objeto pedidos a front end para que los muestre
 app.get("/api", (req, res) => {
     //console.log(pedidos);
     res.send({pedidos: pedidos})
+    res.redirect('/')
 });
 
 //---------------------------------------------------------------------------------------------------
-//metodo post pasando un json local 
+//metodo post -pasando un json local --añade el pedido enviado del front end a los pedidso globales
 app.post('/api/nuevo',(req,res) => {
     //obtenemos el pedido del form 
-    console.log(req.body)
+    //console.log(req.body)
     const newpedido = req.body
-    console.log(newpedido)
+    //console.log(newpedido)
     //console.log(newpedido)
     //añadir el nuevo pedido al json obtenido del servidor 
     pedidos.push(newpedido)
@@ -58,14 +58,33 @@ app.post('/api/nuevo',(req,res) => {
     fs.writeFileSync(path.join(__dirname ,'pedidos.json'), json_pedidos,'utf-8')
     //ver el nuevo json con todos los pedidos
     //console.log(pedidos);
-    res.send("añadido")
+    res.redirect('/api')
 
 });
 
 
 //---------------------------------------------------------------------------------------------------
-//metodo delete pasando un id a otro json 
+//metodo delete -pasando un objeto de un formulario y x id lo borro 
+app.post('/api/delete',(req,res) => {
+    //recibo el id del produto por formulario oculto
+    const pedidoeliminar = req.body
+    //aplico la funcion que define un objeto nuevo menos el pedido que concide co la id pasada 
+    pedidos = pedidos.filter(pedidos=> pedidos.id != pedidoeliminar.id )
+    //console.log(pedidos); 
+    //se codifica para poder escribirse en el fichero
+    const json_pedidos = JSON.stringify(pedidos)
+    //se pasa al fichero para guardar el nuevo resultado
+    fs.writeFileSync(path.join(__dirname ,'pedidos.json'), json_pedidos,'utf-8')
+    res.redirect('/api')
+})
 
+
+//rutas pagina estatica index
+//mostrar index pagina estatica
+/*app.get("/", (req, res) => {
+    //console.log(pedidos);
+    res.sendFile(path.resolve(__dirname, '../asador/build', 'index.html'));
+});*/
 
 //---------------------------------------------------------------------------------------------------
 //inicio de sesion con google
@@ -109,16 +128,16 @@ app.get('/api/auth/google',
 ));
 app.get('/auth/google/callback',
     passport.authenticate('google', {
-        successRedirect: '/succes',
-        failureRedirect: '/error'
+        successRedirect: '/api/succes',
+        failureRedirect: '/api/error'
     })
 );
 
-app.get('/error', (req, res) => {
+app.get('/api/error', (req, res) => {
     res.send('error')
   });
-app.get('/succes', (req, res) => {
-    res.send('succes')
+app.get('/api/succes', (req, res) => {
+    res.redirect('/api')
 });
 //---------------------------------------------------------------------------------------------------
 
