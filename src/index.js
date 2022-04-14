@@ -27,22 +27,17 @@ app.use(express.json());
 //morgan-para ver la respuestas desde consola
 app.use(morgan('dev'))
 app.set('view engine','ejs')
-
-//rutas pag gestion
 //---------------------------------------------------------------------------------------------------
-//conectando react con node -- para que cualquier get muestre index
-/*app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../gestion/build', 'index.html'));
-});*/
-//app.use(express.static( path.join(__dirname ,'/../gestion/build')));
 
+//rutas pag gestion****
+
+//---------------------------------------------------------------------------------------------------
 // metodo get -devuelve el objeto pedidos a front end para que los muestre
 app.get("/api", (req, res) => {
     //console.log(pedidos);
     res.send({pedidos: pedidos})
-    res.redirect('/')
-});
 
+});
 //---------------------------------------------------------------------------------------------------
 //metodo post -pasando un json local --añade el pedido enviado del front end a los pedidso globales
 app.post('/api/nuevo',(req,res) => {
@@ -61,8 +56,6 @@ app.post('/api/nuevo',(req,res) => {
     res.redirect('/api')
 
 });
-
-
 //---------------------------------------------------------------------------------------------------
 //metodo delete -pasando un objeto de un formulario y x id lo borro 
 app.post('/api/delete',(req,res) => {
@@ -77,20 +70,38 @@ app.post('/api/delete',(req,res) => {
     fs.writeFileSync(path.join(__dirname ,'pedidos.json'), json_pedidos,'utf-8')
     res.redirect('/api')
 })
+//---------------------------------------------------------------------------------------------------
+app.use(express.static( path.join(__dirname, '../asador/build')));
 
+//cerrar session
+app.get("/logout", (req, res) => {
+	//hay k cerrar sesion 
+	//redireccionamos a index
+    res.redirect('/')
+});
+//---------------------------------------------------------------------------------------------------
 
-//rutas pagina estatica index
+//rutas pagina estatica index******
+
+//---------------------------------------------------------------------------------------------------
+
 //mostrar index pagina estatica
 /*app.get("/", (req, res) => {
     //console.log(pedidos);
     res.sendFile(path.resolve(__dirname, '../asador/build', 'index.html'));
 });*/
 
+app.get("/", (req, res) => {
+    //console.log(pedidos);
+    res.sendFile(path.resolve(__dirname, '../asador/build', 'index.html'));
+});
+
 //---------------------------------------------------------------------------------------------------
 //inicio de sesion con google
 var passport = require('passport');
 var GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
 const {Claves} = require('./claves/claves');
+const { redirect } = require('express/lib/response');
 
 passport.serializeUser(function(user, done) {
     done(null, user);
@@ -98,7 +109,7 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(user , done) {
     done(null, user);
 });
-
+let usuario=""
 passport.use(
     new GoogleStrategy(
         {
@@ -106,16 +117,18 @@ passport.use(
             clientID: Claves.client_id,
             clientSecret: Claves.client_secret,
         },
-        (accessToken, refreshToken, profile, cb) => {
+        (accessToken, refreshToken, profile, cb,) => {
             //console.log(accessToken)
             //console.log(profile)
             if(profile._json.email === "blazquezmark97@gmail.com"){
-                console.log("correct user")
+                //console.log("correct user")
+				return cb (null, profile);
             }else{
-                // fail        
-                console.log("bad user")
+                // fail 
+                //console.log("bad user")
+                //return usuario = "erroneo"
+				cb(new Error("no eres el ususario adecuado!"));
             }
-            return cb (null, profile);
         }
     )
 )
@@ -128,17 +141,12 @@ app.get('/api/auth/google',
 ));
 app.get('/auth/google/callback',
     passport.authenticate('google', {
-        successRedirect: '/api/succes',
-        failureRedirect: '/api/error'
-    })
+			successRedirect: 'http://localhost:3000/api',
+			failureRedirect: '/'
+			
+    	}
+	)
 );
-
-app.get('/api/error', (req, res) => {
-    res.send('error')
-  });
-app.get('/api/succes', (req, res) => {
-    res.redirect('/api')
-});
 //---------------------------------------------------------------------------------------------------
 
 

@@ -53,7 +53,7 @@ class Pedidos extends React.Component {
 						<div>
 							<span>pollos </span>{val.pollo} <span> patatas </span> {val.patatas}<span> nombre </span>{val.nombre}
 						</div>
-						<div>
+						<div>{/*lo que hace es crear un campo oculto con el valor aleatorio definido arriba y pasarlo por formulario para luego declarar el objeto con ese valo y asi poder eliminarlo por id*/}
 							<form className="d-flex" method="POST" action="/api/delete" name="google">
 								<div className="form-group d-none">
 									<label >pollo</label>
@@ -67,7 +67,7 @@ class Pedidos extends React.Component {
 									<label >nombre</label>
 									<input type="text" className="form-control" name="nombre" value={val.nombre}/>
 								</div>
-								<div className="form-group  d-none"> {/*lo que hace es crear un campo oculto con el valor aleatorio definido arriba y pasarlo por formulario para luego declarar el objeto con ese valor  */}
+								<div className="form-group  d-none"> 
 									<label >id</label>
 									<input type="number" className="form-control" name="id" value={val.id}  />
 								</div>
