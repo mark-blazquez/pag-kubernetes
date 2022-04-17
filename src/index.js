@@ -30,12 +30,16 @@ app.set('view engine','ejs')
 //---------------------------------------------------------------------------------------------------
 
 //rutas pag gestion****
+app.use(express.static( path.join(__dirname, '../gestion/build')));
+
 
 //---------------------------------------------------------------------------------------------------
 // metodo get -devuelve el objeto pedidos a front end para que los muestre
 app.get("/api", (req, res) => {
     //console.log(pedidos);
     res.send({pedidos: pedidos})
+	//res.sendFile(path.resolve(__dirname, '../gestion/build', 'index.html'));
+
 
 });
 //---------------------------------------------------------------------------------------------------
@@ -53,7 +57,10 @@ app.post('/api/nuevo',(req,res) => {
     fs.writeFileSync(path.join(__dirname ,'pedidos.json'), json_pedidos,'utf-8')
     //ver el nuevo json con todos los pedidos
     //console.log(pedidos);
-    res.redirect('/api')
+    //res.redirect('/api')
+	//res.sendFile(path.resolve(__dirname, '../gestion/build', 'index.html'));
+	res.redirect('/api/mid')
+
 
 });
 //---------------------------------------------------------------------------------------------------
@@ -68,10 +75,22 @@ app.post('/api/delete',(req,res) => {
     const json_pedidos = JSON.stringify(pedidos)
     //se pasa al fichero para guardar el nuevo resultado
     fs.writeFileSync(path.join(__dirname ,'pedidos.json'), json_pedidos,'utf-8')
-    res.redirect('/api')
+    //res.redirect('/api')
+	//res.sendFile(path.resolve(__dirname, '../gestion/build', 'index.html'));
+	res.redirect('/api/mid')
+
+
 })
+app.get("/api/mid", (req, res) => {
+
+	res.redirect('http://localhost')
+
+});
 //---------------------------------------------------------------------------------------------------
+//rutas pagina estatica index******
 app.use(express.static( path.join(__dirname, '../asador/build')));
+
+//---------------------------------------------------------------------------------------------------
 
 //cerrar session
 app.get("/logout", (req, res) => {
@@ -79,17 +98,10 @@ app.get("/logout", (req, res) => {
 	//redireccionamos a index
     res.redirect('/')
 });
-//---------------------------------------------------------------------------------------------------
-
-//rutas pagina estatica index******
 
 //---------------------------------------------------------------------------------------------------
 
 //mostrar index pagina estatica
-/*app.get("/", (req, res) => {
-    //console.log(pedidos);
-    res.sendFile(path.resolve(__dirname, '../asador/build', 'index.html'));
-});*/
 
 app.get("/", (req, res) => {
     //console.log(pedidos);

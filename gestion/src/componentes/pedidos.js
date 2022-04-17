@@ -17,7 +17,7 @@ class Pedidos extends React.Component {
 	}
 	
 	componentDidMount() {
-		fetch('http://localhost:3000/api')
+		fetch('http://localhost:8080/api')
 			.then(response => response.json())
 			.then(res =>{
 				this.setState({pedidos: [...this.state.pedidos, ...res.pedidos]})
@@ -54,7 +54,7 @@ class Pedidos extends React.Component {
 							<span>pollos </span>{val.pollo} <span> patatas </span> {val.patatas}<span> nombre </span>{val.nombre}
 						</div>
 						<div>{/*lo que hace es crear un campo oculto con el valor aleatorio definido arriba y pasarlo por formulario para luego declarar el objeto con ese valo y asi poder eliminarlo por id*/}
-							<form className="d-flex" method="POST" action="/api/delete" name="google">
+							<form className="d-flex" method="POST" action="http://localhost:8080/api/delete" name="google">
 								<div className="form-group d-none">
 									<label >pollo</label>
 									<input type="number" className="form-control" name="pollo" value={val.pollo}/>
