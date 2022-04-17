@@ -30,7 +30,7 @@ app.set('view engine','ejs')
 //---------------------------------------------------------------------------------------------------
 
 //rutas pag gestion****
-app.use(express.static( path.join(__dirname, '../gestion/build')));
+//app.use(express.static( path.join(__dirname, '../gestion/build')));
 
 
 //---------------------------------------------------------------------------------------------------
@@ -38,9 +38,6 @@ app.use(express.static( path.join(__dirname, '../gestion/build')));
 app.get("/api", (req, res) => {
     //console.log(pedidos);
     res.send({pedidos: pedidos})
-	//res.sendFile(path.resolve(__dirname, '../gestion/build', 'index.html'));
-
-
 });
 //---------------------------------------------------------------------------------------------------
 //metodo post -pasando un json local --añade el pedido enviado del front end a los pedidso globales
@@ -57,11 +54,7 @@ app.post('/api/nuevo',(req,res) => {
     fs.writeFileSync(path.join(__dirname ,'pedidos.json'), json_pedidos,'utf-8')
     //ver el nuevo json con todos los pedidos
     //console.log(pedidos);
-    //res.redirect('/api')
-	//res.sendFile(path.resolve(__dirname, '../gestion/build', 'index.html'));
 	res.redirect('/api/mid')
-
-
 });
 //---------------------------------------------------------------------------------------------------
 //metodo delete -pasando un objeto de un formulario y x id lo borro 
@@ -75,20 +68,14 @@ app.post('/api/delete',(req,res) => {
     const json_pedidos = JSON.stringify(pedidos)
     //se pasa al fichero para guardar el nuevo resultado
     fs.writeFileSync(path.join(__dirname ,'pedidos.json'), json_pedidos,'utf-8')
-    //res.redirect('/api')
-	//res.sendFile(path.resolve(__dirname, '../gestion/build', 'index.html'));
 	res.redirect('/api/mid')
-
-
 })
 app.get("/api/mid", (req, res) => {
-
-	res.redirect('http://localhost')
-
+	res.redirect('http://localhost:81')
 });
 //---------------------------------------------------------------------------------------------------
 //rutas pagina estatica index******
-app.use(express.static( path.join(__dirname, '../asador/build')));
+//app.use(express.static( path.join(__dirname, '../asador/build')));
 
 //---------------------------------------------------------------------------------------------------
 
@@ -105,7 +92,8 @@ app.get("/logout", (req, res) => {
 
 app.get("/", (req, res) => {
     //console.log(pedidos);
-    res.sendFile(path.resolve(__dirname, '../asador/build', 'index.html'));
+    //res.sendFile(path.resolve(__dirname, '../asador/build', 'index.html'));
+    res.redirect('http://localhost:80')
 });
 
 //---------------------------------------------------------------------------------------------------
@@ -153,7 +141,7 @@ app.get('/api/auth/google',
 ));
 app.get('/auth/google/callback',
     passport.authenticate('google', {
-			successRedirect: 'http://localhost:3000/api',
+			successRedirect: '/api/mid',
 			failureRedirect: '/'
 			
     	}
