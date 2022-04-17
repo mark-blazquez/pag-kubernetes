@@ -71,7 +71,7 @@ app.post('/api/delete',(req,res) => {
 	res.redirect('/api/mid')
 })
 app.get("/api/mid", (req, res) => {
-	res.redirect('http://personal:81')
+	res.redirect('http://personal.com:81')
 });
 //---------------------------------------------------------------------------------------------------
 //rutas pagina estatica index******
@@ -93,7 +93,7 @@ app.get("/logout", (req, res) => {
 app.get("/", (req, res) => {
     //console.log(pedidos);
     //res.sendFile(path.resolve(__dirname, '../asador/build', 'index.html'));
-    res.redirect('http://personal:80')
+    res.redirect('http://personal.com:80')
 });
 
 //---------------------------------------------------------------------------------------------------

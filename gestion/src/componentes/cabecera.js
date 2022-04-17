@@ -12,7 +12,7 @@ class Cabecera extends React.Component {
 				</button>
 
 				<div>
-					<a className="btn btn-danger " href="http://personal:8080/logout">cerrar sesion </a>
+					<a className="btn btn-danger " href="http://personal.com:8080/logout">cerrar sesion </a>
 				</div>
 				
 	  		</nav> 

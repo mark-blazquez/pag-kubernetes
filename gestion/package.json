@@ -2,7 +2,7 @@
   "name": "gestion",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://personal:8080/",
+  "proxy": "http://personal.com:8080/",
   "dependencies": {
     "bootstrap": "^5.1.3",
     "cra-template": "1.1.3",
