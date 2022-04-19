@@ -48,7 +48,7 @@ class Pedidos extends React.Component {
 			return <div>no hay Pedidos</div>
 		}else{
 			return this.state.pedidos.map((val,key)=>{
-				return (
+				render (
 					<div className="d-flex" key={key}>
 						<div>
 							<span>pollos </span>{val.pollo} <span> patatas </span> {val.patatas}<span> nombre </span>{val.nombre}
