@@ -5,13 +5,39 @@ const bodyParser = require ('body-parser');
 const morgan = require('morgan');
 const path = require('path');
 const req = require("express/lib/request");
-const url = 'http://localhost:80/pedidos.json';
+const url = 'http://localhost:86/pedidos.json';
 let options = { json: true };
 const request = require('request');
 //para escribir en un archivo
 const fs = require('fs');
+
+//metodo local--------------------------
 const json_pedidos = fs.readFileSync(path.join(__dirname ,'pedidos.json'),'utf-8')
 let pedidos = JSON.parse(json_pedidos)
+
+//metodo local----------------------------
+
+
+//metodo nube-------------------------------------
+const fetch = require('node-fetch');
+/*
+async function getBlock() {
+  let jsonBlocks;
+  try {
+    var response = await fetch(url);
+    jsonBlocks = await response.text();
+    console.log(jsonBlocks)
+  } catch (e) {
+    // handle error
+    console.error(e)
+  }
+}
+const json_pedidos =getBlock()*/
+//metodo nube-------------------------------------
+
+
+
+//para que funcione las peticiones
 var cors = require('cors')
 //numero  de puerto
 app.set('port',8080);
@@ -19,7 +45,6 @@ app.set('port',8080);
 //middleware
 //formulario
 app.use(cors())
-
 //entender formularios 
 app.use(express.urlencoded({extended: false}));
 //procesar datos json
@@ -37,6 +62,7 @@ app.set('view engine','ejs')
 // metodo get -devuelve el objeto pedidos a front end para que los muestre
 app.get("/api", (req, res) => {
     //console.log(pedidos);
+	//metodo local
     res.send({pedidos: pedidos})
 });
 //---------------------------------------------------------------------------------------------------
