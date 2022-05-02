@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component,MouseEvent } from "react";
 
 
 class Pedidos extends React.Component {
@@ -11,13 +11,14 @@ class Pedidos extends React.Component {
 			patatas:"",
 			nombre:"",
 			id: ""
+			//bgColor: ""			
 		}
 
 		this.handleInputChange = this.handleInputChange.bind(this);
 	}
 	
 	componentDidMount() {
-		fetch('http://personal.com:8080/api')
+		fetch('http://torre-ubuntu.ddns.net:8080/api/muestra')
 			.then(response => response.json())
 			.then(res =>{
 				this.setState({pedidos: [...this.state.pedidos, ...res.pedidos]})
@@ -41,6 +42,12 @@ class Pedidos extends React.Component {
 			id: id
 		}
 	)}
+	/*boxClick = (e) => {
+		this.setState({
+		  bgColor: "red"
+		})
+	  }
+*/
 	
 
 	renderPedidos(){
@@ -48,13 +55,14 @@ class Pedidos extends React.Component {
 			return <div>no hay Pedidos</div>
 		}else{
 			return this.state.pedidos.map((val,key)=>{
-				render (
-					<div className="d-flex" key={key}>
+				return (
+					<div className="d-flex" key={key}> {/*style={{backgroundColor: this.state.bgColor}} onMouseMove={this.boxClick} onmouseout={() => this.handleClick2()}}*/}
 						<div>
-							<span>pollos </span>{val.pollo} <span> patatas </span> {val.patatas}<span> nombre </span>{val.nombre}
+							<span>pollos </span>{val.pollo} <span> patatas </span> {val.patatas}<span> nombre </span>{val.nombre}						
 						</div>
-						<div>{/*lo que hace es crear un campo oculto con el valor aleatorio definido arriba y pasarlo por formulario para luego declarar el objeto con ese valo y asi poder eliminarlo por id*/}
-							<form className="d-flex" method="POST" action="http://personal.com:8080/api/delete" name="google">
+
+						<div >{/*lo que hace es crear un campo oculto con el valor aleatorio definido arriba y pasarlo por formulario para luego declarar el objeto con ese valo y asi poder eliminarlo por id*/}
+							<form  className="d-flex" method="POST"  action="http://torre-ubuntu.ddns.net:8080/api/delete" name="google">
 								<div className="form-group d-none">
 									<label >pollo</label>
 									<input type="number" className="form-control" name="pollo" value={val.pollo}/>
@@ -85,7 +93,9 @@ class Pedidos extends React.Component {
 		return (
 			<div className="container">
 				<h2>pedidos</h2>
-				{this.renderPedidos()}
+				{
+					this.renderPedidos()
+				}
 			</div>
 		)
 	}

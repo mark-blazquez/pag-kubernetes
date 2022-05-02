@@ -19,7 +19,7 @@ class Cabecera extends React.Component {
 				</div>
 
 				<div>
-					<a className="btn btn-danger " href="http://personal.com:8080/api/auth/google">inicio sesion </a>
+					<a className="btn btn-danger ">inicio sesion </a>
 				</div>
 
 			</nav> 

@@ -5,7 +5,7 @@ const bodyParser = require ('body-parser');
 const morgan = require('morgan');
 const path = require('path');
 const req = require("express/lib/request");
-const url = 'http://localhost:86/pedidos.json';
+//const url = 'http://localhost:86/pedidos.json';
 let options = { json: true };
 const request = require('request');
 //para escribir en un archivo
@@ -60,7 +60,7 @@ app.set('view engine','ejs')
 
 //---------------------------------------------------------------------------------------------------
 // metodo get -devuelve el objeto pedidos a front end para que los muestre
-app.get("/api", (req, res) => {
+app.get("/api/muestra", (req, res) => {
     //console.log(pedidos);
 	//metodo local
     res.send({pedidos: pedidos})
@@ -97,7 +97,18 @@ app.post('/api/delete',(req,res) => {
 	res.redirect('/api/mid')
 })
 app.get("/api/mid", (req, res) => {
-	res.redirect('http://personal.com:81')
+	/*async function init() {
+		await sleep(10);
+		res.redirect('http://torre-ubuntu.ddns.net:81')
+  	}
+	function sleep(ms) {
+		return new Promise((resolve) => {
+			setTimeout(resolve, ms);
+		});		
+	}
+	init()*/		
+	res.redirect('http://torre-ubuntu.ddns.net:81')
+
 });
 //---------------------------------------------------------------------------------------------------
 //rutas pagina estatica index******
@@ -109,6 +120,9 @@ app.get("/api/mid", (req, res) => {
 app.get("/logout", (req, res) => {
 	//hay k cerrar sesion 
 	//redireccionamos a index
+	/* delete cookie
+
+	} */
     res.redirect('/')
 });
 
@@ -119,7 +133,7 @@ app.get("/logout", (req, res) => {
 app.get("/", (req, res) => {
     //console.log(pedidos);
     //res.sendFile(path.resolve(__dirname, '../asador/build', 'index.html'));
-    res.redirect('http://personal.com:80')
+    res.redirect('http://torre-ubuntu.ddns.net:80')
 });
 
 //---------------------------------------------------------------------------------------------------
@@ -135,7 +149,7 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(user , done) {
     done(null, user);
 });
-let usuario=""
+//let usuario=""
 passport.use(
     new GoogleStrategy(
         {
@@ -144,11 +158,11 @@ passport.use(
             clientSecret: Claves.client_secret,
         },
         (accessToken, refreshToken, profile, cb,) => {
-            //console.log(accessToken)
             //console.log(profile)
             if(profile._json.email === "blazquezmark97@gmail.com"){
                 //console.log("correct user")
 				return cb (null, profile);
+				//crear cookie para k no dependa de inicio de sesion en modo anonimo
             }else{
                 // fail 
                 //console.log("bad user")
@@ -160,17 +174,18 @@ passport.use(
 )
 //google passport routes
 app.get('/api/auth/google',
-    passport.authenticate('google', {
-        scope:
-            ['email', 'profile']
-    }
-));
+    passport.authenticate('google', 
+		{
+        	scope:['email', 'profile']
+   		}
+	)
+);
 app.get('/auth/google/callback',
-    passport.authenticate('google', {
+    passport.authenticate('google', 
+		{
 			successRedirect: '/api/mid',
 			failureRedirect: '/'
-			
-    	}
+		}
 	)
 );
 //---------------------------------------------------------------------------------------------------
