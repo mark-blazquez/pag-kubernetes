@@ -34,24 +34,27 @@ class Formulario extends React.Component {
 	  
 	render(){
 		return (
-			<form className="container" method="POST" action="http://torre-ubuntu.ddns.net:8080/api/nuevo" name="formulario">
+			<form className="container" method="POST" action="http://localhost:8080/api/nuevo" name="formulario">
 				<div className="form-group">
-					<label >pollo</label>
+					<label >Pollo</label>
 					<input type="number" className="form-control" name ="pollo"   placeholder="....." />
 				</div>
 				<div className="form-group">
-					<label >patatas</label>
+					<label >Patatas</label>
 					<input type="number" className="form-control" name ="patatas" placeholder="......" />
 				</div>
 				<div className="form-group">
-					<label >nombre</label>
+					<label >Nombre</label>
 					<input type="text" className="form-control" name ="nombre" placeholder="....." />
 				</div>
 				<div className="form-group  d-none"> {/*lo que hace es crear un campo oculto con el valor aleatorio definido arriba y pasarlo por formulario para luego declarar el objeto con ese valor  */}
 					<label >id</label>
 					<input type="number" className="form-control" name ="id" value={this.state.id}  />
+				</div >
+				<div className="d-flex justify-content-center m-2">
+					<button type="submit" className="btn btn-primary " >Registrar</button>
 				</div>
-				<button type="submit" className="btn btn-primary" >registrar</button>
+				
 			</form>
 		)
 	}

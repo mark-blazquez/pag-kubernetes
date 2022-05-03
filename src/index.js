@@ -20,21 +20,6 @@ let pedidos = JSON.parse(json_pedidos)
 
 //metodo nube-------------------------------------
 const fetch = require('node-fetch');
-/*
-async function getBlock() {
-  let jsonBlocks;
-  try {
-    var response = await fetch(url);
-    jsonBlocks = await response.text();
-    console.log(jsonBlocks)
-  } catch (e) {
-    // handle error
-    console.error(e)
-  }
-}
-const json_pedidos =getBlock()*/
-//metodo nube-------------------------------------
-
 
 
 //para que funcione las peticiones
@@ -53,10 +38,6 @@ app.use(express.json());
 app.use(morgan('dev'))
 app.set('view engine','ejs')
 //---------------------------------------------------------------------------------------------------
-
-//rutas pag gestion****
-//app.use(express.static( path.join(__dirname, '../gestion/build')));
-
 
 //---------------------------------------------------------------------------------------------------
 // metodo get -devuelve el objeto pedidos a front end para que los muestre
@@ -97,22 +78,12 @@ app.post('/api/delete',(req,res) => {
 	res.redirect('/api/mid')
 })
 app.get("/api/mid", (req, res) => {
-	/*async function init() {
-		await sleep(10);
-		res.redirect('http://torre-ubuntu.ddns.net:81')
-  	}
-	function sleep(ms) {
-		return new Promise((resolve) => {
-			setTimeout(resolve, ms);
-		});		
-	}
-	init()*/		
-	res.redirect('http://torre-ubuntu.ddns.net:81')
+	
+	res.redirect('http://localhost:3000')
 
 });
 //---------------------------------------------------------------------------------------------------
-//rutas pagina estatica index******
-//app.use(express.static( path.join(__dirname, '../asador/build')));
+
 
 //---------------------------------------------------------------------------------------------------
 
@@ -133,7 +104,7 @@ app.get("/logout", (req, res) => {
 app.get("/", (req, res) => {
     //console.log(pedidos);
     //res.sendFile(path.resolve(__dirname, '../asador/build', 'index.html'));
-    res.redirect('http://torre-ubuntu.ddns.net:80')
+    res.redirect('http://10.107.134.113')
 });
 
 //---------------------------------------------------------------------------------------------------

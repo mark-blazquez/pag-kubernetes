@@ -1,4 +1,4 @@
-import React, { Component,MouseEvent } from "react";
+import React, { Component,MouseEvent,useState, useEffect } from "react";
 
 
 class Pedidos extends React.Component {
@@ -16,14 +16,19 @@ class Pedidos extends React.Component {
 
 		this.handleInputChange = this.handleInputChange.bind(this);
 	}
+	//peticion del json a node
 	
 	componentDidMount() {
-		fetch('http://torre-ubuntu.ddns.net:8080/api/muestra')
+		//funcion para hacer la peticion de forma recursiva a node para los cambios en el json solo recargando esa parte del codigo
+		setInterval(() => {
+			fetch('http://localhost:8080/api/muestra')
 			.then(response => response.json())
 			.then(res =>{
+				//borra el objeto definido anteriormente para que no lo imprima en el front end
+				this.setState({pedidos:[] })
 				this.setState({pedidos: [...this.state.pedidos, ...res.pedidos]})
 			}
-		)
+		)}, 1000);
 	}
 	
 	handleInputChange(event) {
@@ -47,22 +52,28 @@ class Pedidos extends React.Component {
 		  bgColor: "red"
 		})
 	  }
-*/
-	
+*/	
+
 
 	renderPedidos(){
 		if (this.state.pedidos.length<=0){
-			return <div>no hay Pedidos</div>
+			return <div className="d-flex justify-content-center"> no hay Pedidos</div>
 		}else{
 			return this.state.pedidos.map((val,key)=>{
 				return (
-					<div className="d-flex" key={key}> {/*style={{backgroundColor: this.state.bgColor}} onMouseMove={this.boxClick} onmouseout={() => this.handleClick2()}}*/}
-						<div>
-							<span>pollos </span>{val.pollo} <span> patatas </span> {val.patatas}<span> nombre </span>{val.nombre}						
-						</div>
+					<div className="d-flex justify-content-center" key={key}> {/*style={{backgroundColor: this.state.bgColor}} onMouseMove={this.boxClick} onmouseout={() => this.handleClick2()}}*/}
+							<table class="table">
+								<tbody>
+									<tr>
+										<td><span>Pollo: </span> <span >{val.pollo}</span> </td>
+										<td><span> Patatas: </span> <span >{val.patatas}</span> </td>
+										<td><span> Nombre: </span> <span >{val.nombre}</span> </td>
+									</tr>
+								</tbody>
+							</table>
 
 						<div >{/*lo que hace es crear un campo oculto con el valor aleatorio definido arriba y pasarlo por formulario para luego declarar el objeto con ese valo y asi poder eliminarlo por id*/}
-							<form  className="d-flex" method="POST"  action="http://torre-ubuntu.ddns.net:8080/api/delete" name="google">
+							<form  className="d-flex" method="POST"  action="http://localhost:8080/api/delete" name="google">
 								<div className="form-group d-none">
 									<label >pollo</label>
 									<input type="number" className="form-control" name="pollo" value={val.pollo}/>
@@ -79,7 +90,10 @@ class Pedidos extends React.Component {
 									<label >id</label>
 									<input type="number" className="form-control" name="id" value={val.id}  />
 								</div>
-								<button type="submit" className="btn btn-primary" >borrar</button>
+								<div >
+									<button type="submit" className="btn btn-primary" >Borrar</button>
+								</div>
+								
 							</form>
 						</div>
 					</div>
@@ -87,15 +101,21 @@ class Pedidos extends React.Component {
 			})
 		}		
 	}
-
+	
 
 	render(){
 		return (
 			<div className="container">
-				<h2>pedidos</h2>
-				{
-					this.renderPedidos()
-				}
+				<div className="d-flex justify-content-center">
+					<h2>Pedidos</h2>
+				</div>
+				<div  >
+					{	
+						this.renderPedidos()	
+					}
+				</div>
+				
+
 			</div>
 		)
 	}

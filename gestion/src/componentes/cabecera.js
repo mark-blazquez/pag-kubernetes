@@ -3,21 +3,18 @@ import logo from './logo.jpg';
 class Cabecera extends React.Component {
 	render(){
 		return( 
-			<nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-				<a className="navbar-brand " href="#">
-					<img src={logo} className="d-inline-block align-top" width="100" height="100" ></img>la casa del pollo flameante
-				</a>
-				<button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-					<span className="navbar-toggler-icon"></span>
-				</button>
-
+			<nav className="navbar navbar-expand-lg navbar-dark bg-dark d-flex justify-content-between">
+				<div className="navbar-brand d-flex" >
+					<img src={logo} className=" rounded-circle" width="100" height="100" ></img>
+				</div> 
 				<div>
-					<a className="btn btn-danger " href="http://torre-ubuntu.ddns.net.com:31059/logout">cerrar sesion </a>
+					<h1 className="text-light">La casa del pollo flameante</h1>
 				</div>
-				
+				<div >
+					<a className="btn btn-danger " href="http://10.108.18.16:8080/logout">Cerrar sesion </a>
+				</div>
 	  		</nav> 
-		)
-		
+		)		
 	}
 }
 export default Cabecera;
