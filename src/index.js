@@ -79,7 +79,7 @@ app.post('/api/delete',(req,res) => {
 })
 app.get("/api/mid", (req, res) => {
 	
-	res.redirect('http://localhost:3000')
+	res.redirect('http://10.109.151.31')
 
 });
 //---------------------------------------------------------------------------------------------------
