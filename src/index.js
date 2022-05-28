@@ -10,6 +10,9 @@ let options = { json: true };
 const request = require('request');
 //para escribir en un archivo
 const fs = require('fs');
+//modulo https
+var https = require('https');
+
 
 //metodo local--------------------------
 const json_pedidos = fs.readFileSync(path.join(__dirname ,'pedidos.json'),'utf-8')
@@ -162,7 +165,10 @@ app.get('/auth/google/callback',
 //---------------------------------------------------------------------------------------------------
 
 
-//creacion del servidor
-app.listen(app.get('port'),()=>{
+//creacion del servidor ahora con certificados
+https.createServer({
+	cert: fs.readFileSync('./certificados/node-cert.pem'),
+	key: fs.readFileSync('./certificados/node-key.pem')
+  },app).listen(app.get('port'),()=>{
     console.log ("servidor corriendo en el puerto 8080")
 })

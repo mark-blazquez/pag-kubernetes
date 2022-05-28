@@ -34,7 +34,7 @@ class Formulario extends React.Component {
 	  
 	render(){
 		return (
-			<form className="container" method="POST" action="http://torre-ubuntu.ddns.net:31059/api/nuevo" name="formulario">
+			<form className="container" method="POST" action="https://torre-ubuntu.ddns.net:31059/api/nuevo" name="formulario">
 				<div className="form-group">
 					<label >Pollo</label>
 					<input type="number" className="form-control" name ="pollo"   placeholder="....." />
