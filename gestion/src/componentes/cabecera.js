@@ -12,7 +12,7 @@ class Cabecera extends React.Component {
 							<h1 className="text-light">La casa del pollo flameante</h1>
 						</div>
 						<div className=" collapse navbar-collapse navbar-brand d-flex justify-content-center" >
-							<a className="btn btn-danger " href="http://10.108.18.16:8080/logout">Cerrar sesion </a>
+							<a className="btn btn-danger " href="http://torre-ubuntu.ddns.net:31059/logout">Cerrar sesion </a>
 						</div>
 				</div>
 
@@ -27,7 +27,7 @@ class Cabecera extends React.Component {
 					</div>
 					<div class=""  >
 						<div className="d-flex justify-content-center">
-							<a className="btn btn-danger " href="http://10.108.18.16:8080/logout">Cerrar sesion </a>
+							<a className="btn btn-danger " href="http://torre-ubuntu.ddns.net:31059/logout">Cerrar sesion </a>
 						</div>
 					</div>
 				</div>

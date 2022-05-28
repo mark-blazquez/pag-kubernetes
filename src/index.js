@@ -79,7 +79,7 @@ app.post('/api/delete',(req,res) => {
 })
 app.get("/api/mid", (req, res) => {
 	
-	res.redirect('http://10.109.151.31')
+	res.redirect('http://torre-ubuntu.ddns.net:31317')
 
 });
 //---------------------------------------------------------------------------------------------------
@@ -104,7 +104,7 @@ app.get("/logout", (req, res) => {
 app.get("/", (req, res) => {
     //console.log(pedidos);
     //res.sendFile(path.resolve(__dirname, '../asador/build', 'index.html'));
-    res.redirect('http://10.107.134.113')
+    res.redirect('http://torre-ubuntu.ddns.net:31952')
 });
 
 //---------------------------------------------------------------------------------------------------

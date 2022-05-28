@@ -21,7 +21,7 @@ class Pedidos extends React.Component {
 	componentDidMount() {
 		//funcion para hacer la peticion de forma recursiva a node para los cambios en el json solo recargando esa parte del codigo
 		setInterval(() => {
-			fetch('http://10.108.18.16:8080/api/muestra')
+			fetch('http://torre-ubuntu.ddns.net:31059/api/muestra')
 			.then(response => response.json())
 			.then(res =>{
 				//borra el objeto definido anteriormente para que no lo imprima en el front end
@@ -73,7 +73,7 @@ class Pedidos extends React.Component {
 							</table>
 
 						<div >{/*lo que hace es crear un campo oculto con el valor aleatorio definido arriba y pasarlo por formulario para luego declarar el objeto con ese valo y asi poder eliminarlo por id*/}
-							<form  className="d-flex" method="POST"  action="http://10.108.18.16:8080/api/delete" name="google">
+							<form  className="d-flex" method="POST"  action="http://torre-ubuntu.ddns.net:31059/api/delete" name="google">
 								<div className="form-group d-none">
 									<label >pollo</label>
 									<input type="number" className="form-control" name="pollo" value={val.pollo}/>

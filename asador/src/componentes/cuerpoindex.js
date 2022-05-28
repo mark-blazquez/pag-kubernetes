@@ -12,7 +12,7 @@ class CuerpoIndex extends React.Component {
 					<h1 class="display-4 font-weight-normal">Gastro Asador</h1>
 					<p class="lead font-weight-normal">Calidad desde el 97</p>
 				</div>
-
+				
 			</div>
 
 		)
