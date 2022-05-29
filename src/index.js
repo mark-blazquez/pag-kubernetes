@@ -167,8 +167,8 @@ app.get('/auth/google/callback',
 
 //creacion del servidor ahora con certificados
 https.createServer({
-	cert: fs.readFileSync('./certificados/node-cert.pem'),
-	key: fs.readFileSync('./certificados/node-key.pem')
+	cert: fs.readFileSync('src/certificados/node-cert.pem'),
+	key: fs.readFileSync('src/certificados/node-key.pem')
   },app).listen(app.get('port'),()=>{
     console.log ("servidor corriendo en el puerto 8080")
 })

@@ -1,18 +1,18 @@
 {
   "files": {
     "main.css": "/static/css/main.e7720ab7.css",
-    "main.js": "/static/js/main.59bfd42c.js",
+    "main.js": "/static/js/main.d276ba2e.js",
     "static/js/787.d5135b0b.chunk.js": "/static/js/787.d5135b0b.chunk.js",
     "static/media/logo1.png": "/static/media/logo1.c07b49eb697736ca4815.png",
     "static/media/cara3.jpg": "/static/media/cara3.ec31daeeae953b6045e1.jpg",
     "static/media/logo.jpg": "/static/media/logo.797e43156c9bfcf7fe79.jpg",
     "index.html": "/index.html",
     "main.e7720ab7.css.map": "/static/css/main.e7720ab7.css.map",
-    "main.59bfd42c.js.map": "/static/js/main.59bfd42c.js.map",
+    "main.d276ba2e.js.map": "/static/js/main.d276ba2e.js.map",
     "787.d5135b0b.chunk.js.map": "/static/js/787.d5135b0b.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e7720ab7.css",
-    "static/js/main.59bfd42c.js"
+    "static/js/main.d276ba2e.js"
   ]
 }
