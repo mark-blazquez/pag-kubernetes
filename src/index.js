@@ -11,7 +11,7 @@ const request = require('request');
 //para escribir en un archivo
 const fs = require('fs');
 //modulo https
-var https = require('https');
+var https = require('https').globalAgent.options.rejectUnauthorized = false;
 
 
 //metodo local--------------------------
