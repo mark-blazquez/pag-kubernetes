@@ -11,7 +11,7 @@ const request = require('request');
 //para escribir en un archivo
 const fs = require('fs');
 //modulo https
-var https = require('https').globalAgent.options.rejectUnauthorized = false;
+var https = require('https');
 
 
 //metodo local--------------------------
@@ -28,7 +28,7 @@ const fetch = require('node-fetch');
 //para que funcione las peticiones
 var cors = require('cors')
 //numero  de puerto
-app.set('port',8080);
+app.set('port',8088);
 
 //middleware
 //formulario
@@ -168,7 +168,8 @@ app.get('/auth/google/callback',
 //creacion del servidor ahora con certificados
 https.createServer({
 	cert: fs.readFileSync('src/certificados/node-cert.pem'),
-	key: fs.readFileSync('src/certificados/node-key.pem')
+	key: fs.readFileSync('src/certificados/node-key.pem'),
+	rejectUnauthorized: false
   },app).listen(app.get('port'),()=>{
     console.log ("servidor corriendo en el puerto 8080")
 })
