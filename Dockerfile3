@@ -1,5 +1,4 @@
 FROM markblazquez/backendk
-#COPY ./src /var/pag-kubernetes/
 WORKDIR /var/pag-kubernetes/
 EXPOSE 8080
 CMD [ "node", "src/index.js" ]

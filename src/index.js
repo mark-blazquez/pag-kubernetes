@@ -28,7 +28,7 @@ const fetch = require('node-fetch');
 //para que funcione las peticiones
 var cors = require('cors')
 //numero  de puerto
-app.set('port',8088);
+app.set('port',8080);
 
 //middleware
 //formulario
