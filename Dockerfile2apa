@@ -1,0 +1,13 @@
+FROM httpd:2.4
+COPY /gestion/build/ /usr/local/apache2/htdocs/
+
+COPY my-httpd.conf /usr/local/apache2/conf/httpd.conf
+COPY httpd-ssl.conf /usr/local/apache2/conf/extra/
+
+COPY ./src/certificados/node-cert.pem /usr/local/apache2/conf/server.crt.pem
+COPY ./src/certificados/node-key.pem  /usr/local/apache2/conf/server.key.pem
+
+EXPOSE 81
+EXPOSE 444
+
+

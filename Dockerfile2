@@ -1,11 +1,12 @@
 FROM nginx:stable-alpine
 COPY /gestion/build/ /usr/share/nginx/html/
-COPY default.conf /etc/nginx/conf.d/
+COPY default.conf.1 /etc/nginx/conf.d/default.conf
 COPY ./src/certificados/node-cert.pem /etc/ssl/
 COPY ./src/certificados/node-key.pem  /etc/ssl/
 
-EXPOSE 80
+EXPOSE 81
 EXPOSE 443
+EXPOSE 444
 
 CMD ["nginx", "-g", "daemon off;"]
 
