@@ -53,6 +53,7 @@ app.get("/api/muestra", (req, res) => {
 //metodo post -pasando un json local --añade el pedido enviado del front end a los pedidso globales
 app.post('/api/nuevo',(req,res) => {
     if(req.headers.authorization){
+		//añadir el de movil 
 		const newpedidosucio = req.headers.authorization
 		const newpedido=JSON.parse(newpedidosucio)
 		pedidos.push(newpedido)
@@ -79,21 +80,35 @@ app.post('/api/nuevo',(req,res) => {
 //---------------------------------------------------------------------------------------------------
 //metodo delete -pasando un objeto de un formulario y x id lo borro 
 app.post('/api/delete',(req,res) => {
-    //recibo el id del produto por formulario oculto
-    const pedidoeliminar = req.body
-    //aplico la funcion que define un objeto nuevo menos el pedido que concide co la id pasada 
-    pedidos = pedidos.filter(pedidos=> pedidos.id != pedidoeliminar.id )
-    //console.log(pedidos); 
-    //se codifica para poder escribirse en el fichero
-    const json_pedidos = JSON.stringify(pedidos)
-    //se pasa al fichero para guardar el nuevo resultado
-    fs.writeFileSync(path.join(__dirname ,'pedidos.json'), json_pedidos,'utf-8')
-	res.redirect('/api/mid')
+	if(req.headers.authorization){
+		//eliminar el de movil 
+		const cabecera = req.headers.authorization
+		const eliminar=JSON.parse(cabecera)
+		//console.log(eliminar)
+		//const id=JSON.parse(newpedidosucio)
+		pedidos = pedidos.filter(pedidos=> pedidos.id != eliminar.id )
+		//console.log(pedidos); 
+		//se codifica para poder escribirse en el fichero
+		const json_pedidos = JSON.stringify(pedidos)
+		//se pasa al fichero para guardar el nuevo resultado
+		fs.writeFileSync(path.join(__dirname ,'pedidos.json'), json_pedidos,'utf-8')
+	}else{
+		//recibo el id del produto por formulario oculto
+		const pedidoeliminar = req.body
+		//aplico la funcion que define un objeto nuevo menos el pedido que concide co la id pasada 
+		pedidos = pedidos.filter(pedidos=> pedidos.id != pedidoeliminar.id )
+		//console.log(pedidos); 
+		//se codifica para poder escribirse en el fichero
+		const json_pedidos = JSON.stringify(pedidos)
+		//se pasa al fichero para guardar el nuevo resultado
+		fs.writeFileSync(path.join(__dirname ,'pedidos.json'), json_pedidos,'utf-8')
+		res.redirect('/api/mid')
+	}
+
+    
 })
 app.get("/api/mid", (req, res) => {
-	
-	res.redirect('http://torre-ubuntu.ddns.net:31317')
-
+	res.redirect('http://torre-ubuntu.ddns.net:81')
 });
 //---------------------------------------------------------------------------------------------------
 
@@ -117,7 +132,7 @@ app.get("/logout", (req, res) => {
 app.get("/", (req, res) => {
     //console.log(pedidos);
     //res.sendFile(path.resolve(__dirname, '../asador/build', 'index.html'));
-    res.redirect('http://torre-ubuntu.ddns.net:31952')
+    res.redirect('http://torre-ubuntu.ddns.net:80')
 });
 
 //---------------------------------------------------------------------------------------------------
@@ -183,3 +198,6 @@ https.createServer({
   },app).listen(app.get('port'),()=>{
     console.log ("servidor corriendo en el puerto 8080")
 })
+/*
+app.listen(app.get('port'),()=>{
+    console.log ("servidor corriendo en el puerto 8080")})*/
