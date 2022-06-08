@@ -52,33 +52,57 @@ app.get("/api/muestra", (req, res) => {
 //---------------------------------------------------------------------------------------------------
 //metodo post -pasando un json local --añade el pedido enviado del front end a los pedidso globales
 app.post('/api/nuevo',(req,res) => {
-    //obtenemos el pedido del form 
-    //console.log(req.body)
-    const newpedido = req.body
-    //console.log(newpedido)
-    //console.log(newpedido)
-    //añadir el nuevo pedido al json obtenido del servidor 
-    pedidos.push(newpedido)
-    //cojemos el json de epdidos y lo guaradmos como texto
-    const json_pedidos = JSON.stringify(pedidos)
-    fs.writeFileSync(path.join(__dirname ,'pedidos.json'), json_pedidos,'utf-8')
-    //ver el nuevo json con todos los pedidos
-    //console.log(pedidos);
-	res.redirect('/api/mid')
+    if(req.headers.authorization){
+		const newpedidosucio = req.headers.authorization
+		const newpedido=JSON.parse(newpedidosucio)
+		pedidos.push(newpedido)
+		//cojemos el json de epdidos y lo guaradmos como texto
+		const json_pedidos = JSON.stringify(pedidos)
+		fs.writeFileSync(path.join(__dirname ,'pedidos.json'), json_pedidos,'utf-8')
+	}else{
+	//obtenemos el pedido del form 
+		//console.log(req.body)
+		const newpedido = req.body
+		//console.log(newpedido)
+		//console.log(newpedido)
+		//añadir el nuevo pedido al json obtenido del servidor 
+		pedidos.push(newpedido)
+		//cojemos el json de epdidos y lo guaradmos como texto
+		const json_pedidos = JSON.stringify(pedidos)
+		fs.writeFileSync(path.join(__dirname ,'pedidos.json'), json_pedidos,'utf-8')
+		//ver el nuevo json con todos los pedidos
+		//console.log(pedidos);
+		res.redirect('/api/mid')
+	}
 });
 //---------------------------------------------------------------------------------------------------
 //metodo delete -pasando un objeto de un formulario y x id lo borro 
 app.post('/api/delete',(req,res) => {
-    //recibo el id del produto por formulario oculto
-    const pedidoeliminar = req.body
-    //aplico la funcion que define un objeto nuevo menos el pedido que concide co la id pasada 
-    pedidos = pedidos.filter(pedidos=> pedidos.id != pedidoeliminar.id )
-    //console.log(pedidos); 
-    //se codifica para poder escribirse en el fichero
-    const json_pedidos = JSON.stringify(pedidos)
-    //se pasa al fichero para guardar el nuevo resultado
-    fs.writeFileSync(path.join(__dirname ,'pedidos.json'), json_pedidos,'utf-8')
-	res.redirect('/api/mid')
+    if(req.headers.authorization){
+		//eliminar el de movil 
+		const cabecera = req.headers.authorization
+		const eliminar=JSON.parse(cabecera)
+		//console.log(eliminar)
+		//const id=JSON.parse(newpedidosucio)
+		pedidos = pedidos.filter(pedidos=> pedidos.id != eliminar.id )
+		//console.log(pedidos); 
+		//se codifica para poder escribirse en el fichero
+		const json_pedidos = JSON.stringify(pedidos)
+		//se pasa al fichero para guardar el nuevo resultado
+		fs.writeFileSync(path.join(__dirname ,'pedidos.json'), json_pedidos,'utf-8')
+	}else{
+		//recibo el id del produto por formulario oculto
+		const pedidoeliminar = req.body
+		//aplico la funcion que define un objeto nuevo menos el pedido que concide co la id pasada 
+		pedidos = pedidos.filter(pedidos=> pedidos.id != pedidoeliminar.id )
+		//console.log(pedidos); 
+		//se codifica para poder escribirse en el fichero
+		const json_pedidos = JSON.stringify(pedidos)
+		//se pasa al fichero para guardar el nuevo resultado
+		fs.writeFileSync(path.join(__dirname ,'pedidos.json'), json_pedidos,'utf-8')
+		res.redirect('/api/mid')
+	}
+
 })
 app.get("/api/mid", (req, res) => {
 	
